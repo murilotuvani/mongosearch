@@ -30,6 +30,13 @@ public class ItemService {
 //		sb.append("price: ").append(nitem.price);
 //		
 //		mongo2ElasticGateway.syncIt(sb.toString());
+		StringBuilder sbThread = new StringBuilder("ItemService.Thread(id=\"");
+		
+		sbThread.append(Thread.currentThread().getId())
+		        .append("\", name=\"")
+		        .append(Thread.currentThread().getName())
+		        .append("\")");
+		System.out.println(sbThread.toString());
 		mongo2ElasticGateway.syncIt(nitem);
 		return nitem;
 	}

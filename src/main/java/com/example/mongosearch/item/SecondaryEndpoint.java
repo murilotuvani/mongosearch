@@ -12,8 +12,14 @@ public class SecondaryEndpoint {
 
 	@ServiceActivator(inputChannel = "mongo2elasticChannel")
 	public void handleDiscardedCargo(Item item) {
-		logger.info("SecondaryEndpoint in Batch = " + item.getId());
-		System.out.println("SecondaryEndpoint message : " + item.getId());
+		StringBuilder sbThread = new StringBuilder("SecondaryEndpoint.Thread(id=\"");
+		sbThread.append(Thread.currentThread().getId())
+		        .append("\", name=\"")
+		        .append(Thread.currentThread().getName())
+				.append("\", item.id=")
+				.append(item.getId()).append(")");
+		System.out.println(sbThread.toString());
+		logger.info(sbThread.toString());
 	}
 
 }

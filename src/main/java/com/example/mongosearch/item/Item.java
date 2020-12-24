@@ -5,8 +5,10 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.format.annotation.DateTimeFormat;
 
+@Document(indexName = "item")
 public class Item implements Serializable {
 
 	private static final long serialVersionUID = -9143671793297197930L;
