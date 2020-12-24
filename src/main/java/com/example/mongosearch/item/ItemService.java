@@ -11,6 +11,9 @@ public class ItemService {
 
 	@Autowired
 	ItemMongoRepository itemMongoRepository;
+	
+	@Autowired
+	Mongo2ElasticGateway mongo2ElasticGateway;
 
 	
 	public Optional<Item> findById(String id) {
@@ -18,7 +21,17 @@ public class ItemService {
 	}
 	
 	public Item save(Item item) {
-		return itemMongoRepository.save(item);
+		Item nitem = itemMongoRepository.save(item);
+//		StringBuilder sb = new StringBuilder();
+//		sb.append("id: ").append(nitem.id);
+//		sb.append("title: ").append(nitem.title);
+//		sb.append("ean13: ").append(nitem.ean13);
+//		sb.append("description: ").append(nitem.description);
+//		sb.append("price: ").append(nitem.price);
+//		
+//		mongo2ElasticGateway.syncIt(sb.toString());
+		mongo2ElasticGateway.syncIt(nitem);
+		return nitem;
 	}
 	
 	public List<Item> list() {
@@ -27,6 +40,7 @@ public class ItemService {
 
 	public void delete(Item item) {
 		itemMongoRepository.delete(item);
+		
 	}
 
 }
