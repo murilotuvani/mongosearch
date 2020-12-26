@@ -1,14 +1,13 @@
 package com.example.mongosearch;
 
-import java.io.IOException;
-
-import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
-import org.elasticsearch.client.indices.CreateIndexRequest;
-import org.elasticsearch.client.indices.CreateIndexResponse;
-import org.elasticsearch.client.indices.GetIndexRequest;
-import org.elasticsearch.client.indices.GetIndexResponse;
-import org.elasticsearch.common.xcontent.XContentType;
+//import org.elasticsearch.client.RequestOptions;
+//import org.elasticsearch.client.RestHighLevelClient;
+//import org.elasticsearch.client.indices.CreateIndexRequest;
+//import org.elasticsearch.client.indices.CreateIndexResponse;
+//import org.elasticsearch.client.indices.GetIndexRequest;
+//import org.elasticsearch.client.indices.GetIndexResponse;
+//import org.elasticsearch.common.xcontent.XContentType;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -51,41 +50,41 @@ public class MongosearchApplication {
 	@Profile({ "dev" })
 	CommandLineRunner init(RestHighLevelClient client) {
 		return args -> {
-			// GET /_cat/indices
-			/** curl --header "Content-Type: application/json" \
-                http://localhost:9200/_cat/indices
-                */
-			GetIndexRequest request = new GetIndexRequest("*");
-			GetIndexResponse response;
-
-			try {
-				response = client.indices().get(request, RequestOptions.DEFAULT);
-				String[] indixes = response.getIndices();
-				if (indixes.length == 0) {
-					System.out.println("Index not found");
-					
-					CreateIndexRequest crequest = new CreateIndexRequest("item");
-					crequest.mapping(
-					        "{\n" +
-					        "  \"properties\": {\n" +
-					        "    \"message\": {\n" +
-					        "      \"type\": \"text\"\n" +
-					        "    }\n" +
-					        "  }\n" +
-					        "}", 
-					        XContentType.JSON);
-					CreateIndexResponse cresponse = client.indices().create(crequest, RequestOptions.DEFAULT);
-					System.out.println("Index " + cresponse.index() + " create request acknowledged : "
-							+ cresponse.isAcknowledged());
-					;
-				} else {
-					System.out.println("Index found :: " + indixes[0]);
-				}
-
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			
+//			// GET /_cat/indices
+//			/** curl --header "Content-Type: application/json" \
+//                http://localhost:9200/_cat/indices
+//                */
+//			GetIndexRequest request = new GetIndexRequest("*");
+//			GetIndexResponse response;
+//
+//			try {
+//				response = client.indices().get(request, RequestOptions.DEFAULT);
+//				String[] indixes = response.getIndices();
+//				if (indixes.length == 0) {
+//					System.out.println("Index not found");
+//					
+//					CreateIndexRequest crequest = new CreateIndexRequest("item");
+//					crequest.mapping(
+//					        "{\n" +
+//					        "  \"properties\": {\n" +
+//					        "    \"message\": {\n" +
+//					        "      \"type\": \"text\"\n" +
+//					        "    }\n" +
+//					        "  }\n" +
+//					        "}", 
+//					        XContentType.JSON);
+//					CreateIndexResponse cresponse = client.indices().create(crequest, RequestOptions.DEFAULT);
+//					System.out.println("Index " + cresponse.index() + " create request acknowledged : "
+//							+ cresponse.isAcknowledged());
+//					;
+//				} else {
+//					System.out.println("Index found :: " + indixes[0]);
+//				}
+//
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			}
+//			
 		};
 
 	}

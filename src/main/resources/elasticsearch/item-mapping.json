@@ -1,0 +1,13 @@
+{
+    "mappings" : {
+    	"dynamic": false,
+        "properties" : {
+            "title" : {
+                "type" : "text"
+            },
+            "description" : {
+                "type" : "text"
+            }
+        }
+    }
+}

@@ -6,16 +6,30 @@ import java.time.LocalDateTime;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldType;
+import org.springframework.data.elasticsearch.annotations.Mapping;
+import org.springframework.data.elasticsearch.annotations.Setting;
 import org.springframework.format.annotation.DateTimeFormat;
 
-@Document(indexName = "item")
+/**
+ * createIndex makes the Index to be created, it's optional.
+ * 
+ * @author murilo
+ *
+ */
+@Document(indexName = "item", createIndex = true)
+@Setting(settingPath = "/elasticsearch/item-setting.json")
+@Mapping(mappingPath = "/elasticsearch/item-mapping.json")
 public class Item implements Serializable {
 
 	private static final long serialVersionUID = -9143671793297197930L;
 
 	@Id
 	String id;
+	@Field(type = FieldType.Text, analyzer = "english")
 	String title;
+	@Field(type = FieldType.Text, analyzer = "english")
 	String description;
 	BigDecimal price;
 	Long ean13;
