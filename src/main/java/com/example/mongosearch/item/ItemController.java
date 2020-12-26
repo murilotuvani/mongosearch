@@ -10,6 +10,7 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -22,8 +23,16 @@ public class ItemController {
 	ItemService itemService;
 	
 	@GetMapping
-	public ModelAndView index() {
-		ModelAndView mv = new ModelAndView("home");
+	public ModelAndView index(@RequestParam(name = "k", required = false) String k) {
+		System.out.println("Searching ... K : " + k);
+		ModelAndView mv = new ModelAndView("search");
+		
+		if (k != null && !"".equals(k.trim())) {
+			List<Item> items = itemService.search(k);
+			if (items != null && !items.isEmpty()) {
+				mv.addObject("items", items);		
+			}
+		}
 		return mv;
 	}
 	
@@ -49,6 +58,12 @@ public class ItemController {
 			mv.addObject("mensagemErro", "Não foi possível salvar/editar este cargo! ");
 		}
 		attributes.addFlashAttribute("mensagemSucesso", "Cargo alterado/cadastrado com sucesso!");
+		return mv;
+	}
+	
+	@GetMapping("edit")
+	public ModelAndView edit() {
+		ModelAndView mv = new ModelAndView("edit");
 		return mv;
 	}
 	

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" th:lang="${lang}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
+	crossorigin="anonymous">
+<title>Search items!</title>
+</head>
+<body>
+	<h1>Search items!</h1>
+	<div class="container">
+		<form class="form-inline" method="GET" action="/" target="_top">
+			<input type="text" class="form-control mb-2 mr-sm-2" id="k" name="k" placeholder="Search..." th:value="${k}">
+			<button type="submit" class="btn btn-primary mb-2">Submit</button>
+		</form>
+	
+		<table>
+			<thead>
+				<tr>
+					<th th:text="Title">Title</th>
+					<th th:text="Description">Description</th>
+					<th th:text="Id">Id</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="item : ${items}">
+					<th th:text="${item.title}">Title</th>
+					<td th:text="${item.description}">Description</td>
+					<th th:text="${item.id}">Id</th>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+
+
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+		crossorigin="anonymous"></script>
+</body>
+</html>

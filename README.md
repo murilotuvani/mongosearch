@@ -9,5 +9,9 @@ Example project using MongoDB as database and ElasticSearch as Search engine wit
 ### Executes ElasticSearch
 docker run -d --name=elasticsearch -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" docker.elastic.co/elasticsearch/elasticsearch:7.10.1
 
+### Executes Kibana (Optional)
+Kibana is not necessary, you'll just use it if you want a better way to manage Elasticsaarch
+docker run --name=kibana --link=elasticsearch -p 5601:5601 docker.elastic.co/kibana/kibana:7.10.1
+
 ### Executes MongoDB
 docker run -d --name mongo -p 27017:27017 mongo

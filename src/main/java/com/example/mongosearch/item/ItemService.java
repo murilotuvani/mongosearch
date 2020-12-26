@@ -2,8 +2,16 @@ package com.example.mongosearch.item;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
+import org.elasticsearch.common.unit.Fuzziness;
+import org.elasticsearch.index.query.QueryBuilder;
+import org.elasticsearch.index.query.QueryBuilders;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
+import org.springframework.data.elasticsearch.core.SearchHits;
+import org.springframework.data.elasticsearch.core.query.NativeSearchQuery;
+import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,6 +22,12 @@ public class ItemService {
 	
 	@Autowired
 	Mongo2ElasticGateway mongo2ElasticGateway;
+	
+	@Autowired
+	ElasticsearchOperations elasticsearchOperations;
+	
+//	@Autowired
+//	ItemElasticsearchRepository itemElasticsearchRepository;
 
 	
 	public Optional<Item> findById(String id) {
@@ -22,14 +36,6 @@ public class ItemService {
 	
 	public Item save(Item item) {
 		Item nitem = itemMongoRepository.save(item);
-//		StringBuilder sb = new StringBuilder();
-//		sb.append("id: ").append(nitem.id);
-//		sb.append("title: ").append(nitem.title);
-//		sb.append("ean13: ").append(nitem.ean13);
-//		sb.append("description: ").append(nitem.description);
-//		sb.append("price: ").append(nitem.price);
-//		
-//		mongo2ElasticGateway.syncIt(sb.toString());
 		StringBuilder sbThread = new StringBuilder("ItemService.Thread(id=\"");
 		
 		sbThread.append(Thread.currentThread().getId())
@@ -48,6 +54,33 @@ public class ItemService {
 	public void delete(Item item) {
 		itemMongoRepository.delete(item);
 		
+	}
+
+	public List<Item> search(String k) {
+		
+		QueryBuilder matchQueryBuilder = QueryBuilders.multiMatchQuery(k, "title", "description")
+                .fuzziness(Fuzziness.AUTO)
+                .prefixLength(3)
+                .maxExpansions(10);
+		
+//		QueryShardContext sourceBuilder;
+//		matchQueryBuilder.toQuery(shardContext)
+//		SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
+//        sourceBuilder.from(0);
+//        // quantidadde de elementos a serem retornados pela pesquisa
+//        sourceBuilder.size(25);
+//        sourceBuilder.timeout(new TimeValue(3, TimeUnit.SECONDS));
+//        sourceBuilder.set
+		
+//		//https://docs.spring.io/spring-data/elasticsearch/docs/current/reference/html/#repositories.namespace-reference
+//		NativeSearchQuery query = new NativeSearchQueryBuilder()
+		NativeSearchQuery query = new NativeSearchQueryBuilder()
+				.withQuery(matchQueryBuilder).build();
+		
+		
+		SearchHits<Item> response = elasticsearchOperations.search(query, Item.class);
+		List<Item> items = response.getSearchHits().stream().map(hit -> hit.getContent()).collect(Collectors.toList());
+		return items;
 	}
 
 }
