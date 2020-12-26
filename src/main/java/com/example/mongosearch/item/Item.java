@@ -19,8 +19,8 @@ import org.springframework.format.annotation.DateTimeFormat;
  *
  */
 @Document(indexName = "item", createIndex = true)
-@Setting(settingPath = "/elasticsearch/item-setting.json")
-@Mapping(mappingPath = "/elasticsearch/item-mapping.json")
+//@Setting(settingPath = "/elasticsearch/item-setting.json")
+//@Mapping(mappingPath = "/elasticsearch/item-mapping.json")
 public class Item implements Serializable {
 
 	private static final long serialVersionUID = -9143671793297197930L;

@@ -15,3 +15,37 @@ docker run -d --name=kibana --link=elasticsearch -p 5601:5601 docker.elastic.co/
 
 ### Executes MongoDB
 docker run -d --name mongo -p 27017:27017 mongo
+
+
+### Creating manyally the index
+'''
+PUT /item
+{
+  "mappings" : {
+    "dynamic": false,
+    "properties" : {
+      "title" : {
+        "type" : "text"
+      },
+      "description" : {
+        "type" : "text"
+      },
+      "ean13" : {
+        "type" : "long"
+      },
+      "price" : {
+        "type" : "float"
+      }
+    }
+  },
+  "settings": {
+    "analysis": {
+      "analyzer": {
+        "default": {
+          "type": "english"
+        }
+      }
+    }
+  }
+}
+'''
