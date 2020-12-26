@@ -59,6 +59,13 @@ public class ItemApiController {
 	      --request POST \
 	      --data '{"title": "Soda Diet Coke Cube Pack","description": "Soda Diet Coke Cube Pack.","price": 0.95, "ean13": 49000010633}' \
 	      http://localhost:8080/api/item
+	      
+	      
+	 curl --header "Content-Type: application/json" \
+	      --request POST \
+	      --data '{"title": "Muscle Milk Coffee House, Mocha Latte Non Dairy Protein Shake, 11 oz Bottles, 4 Count","description": "Muscle Milk Coffee House, Mocha Latte Non Dairy Protein Shake, 11 oz Bottles, 4 Count.","price": 6.65, "ean13": 876063006460}' \
+	      http://localhost:8080/api/item
+	      
 	 * 
 	 * @param item
 	 * @return

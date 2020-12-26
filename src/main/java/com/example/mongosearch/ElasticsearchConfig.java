@@ -9,14 +9,19 @@ import org.springframework.data.elasticsearch.config.AbstractElasticsearchConfig
 
 @Configuration
 public class ElasticsearchConfig extends AbstractElasticsearchConfiguration {
+	
 
 	@Override
-	@Bean
+	@Bean(destroyMethod = "close")
 	public RestHighLevelClient elasticsearchClient() {
+		System.out.println("Creating Elasticsearch's RestHighLevelClient");
 		final ClientConfiguration clientConfiguration = ClientConfiguration.builder()
 				.connectedTo("localhost:9200")
 				.build();
-
-		return RestClients.create(clientConfiguration).rest();
+		
+		RestHighLevelClient client = RestClients.create(clientConfiguration).rest();
+		
+		return client;
 	}
+	
 }

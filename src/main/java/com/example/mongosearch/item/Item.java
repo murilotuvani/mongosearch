@@ -89,4 +89,10 @@ public class Item implements Serializable {
 		this.updatedOn = updatedOn;
 	}
 
+	@Override
+	public String toString() {
+		return "Item [id=" + id + ", title=" + title + ", description=" + description + ", price=" + price + ", ean13="
+				+ ean13 + ", version=" + version + "]";
+	}
+
 }
